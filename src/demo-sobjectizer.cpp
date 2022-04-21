@@ -27,7 +27,8 @@ public:
   }
 
   void so_evt_start() override {
-    std::cout << "main_actor started" << std::endl;
+    std::cout << std::this_thread::get_id() << ": main_actor started"
+              << std::endl;
     so_5::send_delayed<ping>(*this, 999ms);
   }
 };
@@ -37,7 +38,8 @@ class peer_actor final : public so_5::agent_t {
   const std::string name_;
 
   void on_value(mhood_t<int> what) const {
-    std::cout << "peer_actor received: " << *what << std::endl;
+    std::cout << std::this_thread::get_id()
+              << ": peer_actor received: " << *what << std::endl;
     global_done = true;
     cond.notify_all();
   }
@@ -54,9 +56,12 @@ public:
 void demo_sobjectizer() {
   so_5::launch([](so_5::environment_t &env) {
     auto mbox = env.create_mbox();
-    env.introduce_coop([mbox](so_5::coop_t &coop) {
-      coop.make_agent<main_actor>(mbox);
-      coop.make_agent<peer_actor>(mbox);
+    env.introduce_coop([&](so_5::coop_t &coop) {
+      // https://github.com/Stiffstream/sobjectizer/wiki/SO-5.6-InDepth-Dispatchers
+      namespace dispatcher = so_5::disp::thread_pool;
+      auto disp = dispatcher::make_dispatcher(env).binder();
+      coop.make_agent_with_binder<main_actor>(disp, mbox);
+      coop.make_agent_with_binder<peer_actor>(disp, mbox);
     });
 
     // wait for the scenario to finish
