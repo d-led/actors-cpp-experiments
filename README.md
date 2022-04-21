@@ -9,8 +9,9 @@ experimenting with actors in c++
 - make sure to install [vcpkg](https://vcpkg.io) and set `VCPKG_ROOT` accordingly
 - `scripts/demo.sh`
 
-## Dependencies
+## Actor Libraries
 
 ### SObjectizer
 
 - [github.com/Stiffstream/sobjectizer](https://github.com/Stiffstream/sobjectizer)
+- [demo-sobjectizer.cpp](src/demo-sobjectizer.cpp)

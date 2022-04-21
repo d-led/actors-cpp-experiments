@@ -7,7 +7,10 @@ include(CTest)
 enable_testing()
 
 find_package(sobjectizer CONFIG REQUIRED)
-add_executable(actor-experiments-cpp src/main.cpp)
+add_executable(actor-experiments-cpp
+    src/main.cpp
+    src/demo-sobjectizer.cpp
+)
 
 
 target_link_libraries(actor-experiments-cpp sobjectizer::StaticLib)
