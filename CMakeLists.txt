@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.0.0)
 project(actor-experiments-cpp VERSION 0.1.0)
 
-include($ENV{VCPKG_HOME}/scripts/buildsystems/vcpkg.cmake)
+include($ENV{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake)
 
 include(CTest)
 enable_testing()
