@@ -54,6 +54,7 @@ public:
 };
 
 void demo_sobjectizer() {
+  std::cout << "---=== sobjectizer ===---" << std::endl;
   so_5::launch([](so_5::environment_t &env) {
     auto mbox = env.create_mbox();
     env.introduce_coop([&](so_5::coop_t &coop) {
